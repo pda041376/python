@@ -1,3 +1,9 @@
+#
+# main source of reference at this point is from:
+# http://www.voidynullness.net/blog/2013/07/25/gmail-email-with-python-via-imap/
+#
+
+
 import sys
 import imaplib
 import getpass
