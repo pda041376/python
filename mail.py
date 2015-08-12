@@ -11,6 +11,7 @@ import email
 import datetime
 
 
+# all of this is from above link
 def process_mailbox(mail_item):
 	rv, data = mail_item.search(None, "ALL")
 	if rv != 'OK':
@@ -32,8 +33,8 @@ def process_mailbox(mail_item):
 			print "Local Date:", local_date.strftime("%a, %d %b %Y %H:%M:%S")
 
 
-server_entry = input(("Select the email service\n1: Yahoo Mail\n2: Gmail\n3: Microsoft Email"
-                      "(Hotmail, outlook.com, live.com)\n[1, 2, 3, etc.]: "))
+server_entry = input(("Select the email service\n1: Yahoo Mail\n2: Gmail\n"
+                      "3: Microsoft Email(Hotmail, outlook.com, live.com)\n[1, 2, 3, etc.]: "))
 
 if server_entry == 1:
 	mail_item = imaplib.IMAP4_SSL("imap.mail.yahoo.com")
@@ -58,18 +59,19 @@ except imaplib.IMAP4.error:
 
 # next steps: reformat the retrieved mail folder lists
 # and enumerate results
-rv, mailboxes = mail_item.list()
+rv, mailboxes = mail_item.list()  # from above link
 mailboxes = ''.join(mailboxes).translate(None, ')(/\\"').replace('HasChildren', '') \
-	.replace('HasNoChildren', '')
+	.replace('HasNoChildren', '').split()
 if rv == "OK":
 	print "Mailboxes: "
-	print mailboxes
+	for i, v in enumerate(mailboxes):
+		print i, v
 
 selection = raw_input("Select a mailbox: ")
 
 # next steps:
 # change to display current messages first
-# limit rresults to twenty retrieved at a time
+# limit results to twenty retrieved at a time
 # implement a way to continue getting messages after the first 20
 rv, data = mail_item.select(selection)
 if rv == "OK":
